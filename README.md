@@ -10,9 +10,13 @@ Note: this project can only be run with Python 3.
 
 ## Usage
 
+Check the `active_model` variable for which model will be used
+
+Then run:
+
 > python train.py
 
-Trains the model and saves it as `simple-sequential.h5`
+That trains the model and saves it as the name of the activei\_model variable, like `dense_1.h5`
 
 ## Other
 

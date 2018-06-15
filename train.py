@@ -2,11 +2,15 @@ import numpy as np
 import random
 import math
 from keras.models import Sequential, load_model
-from keras.layers import Conv2D, MaxPooling2D, Dropout, Dense, Flatten
+from keras.layers import Conv1D, GlobalMaxPooling1D, Embedding, Dropout, Dense, Flatten
 from keras.constraints import max_norm
 
 epochs = 10
 batch_size = 4
+
+model_types = ['dense_1', 'conv1d_1']
+
+active_model = 'conv1d_1'
 
 source_csv = 'hki_liikennemaarat.csv'
 source_csv_delimiter = ';'
@@ -25,10 +29,11 @@ print(source_data[25000])
 traffic_data = []
 
 for i in range(len(source_data)):
+  hours, minutes = divmod(source_data[i][2], 100)
   traffic_data.append([
     stops.index(source_data[i][0]) / len(stops),
     source_data[i][1] - 1,
-    source_data[i][2] / 2400,
+    (hours + (minutes / 60)) / 24,
     (source_data[i][3] - source_csv_start_year) / (source_csv_end_year - source_csv_start_year),
     source_data[i][4] / 5000,
     source_data[i][5] / 1000,
@@ -71,14 +76,27 @@ print(testY.shape)
 # create and fit model
 model = Sequential()
 
-model.add(Dense(4, input_shape=(4, ), activation='relu'))
-model.add(Dropout(0.5))
-model.add(Dense(12, activation='relu'))
-model.add(Dropout(0.5))
-model.add(Dense(7, activation='sigmoid'))
+if(active_model == 'dense_1'):
+
+  model.add(Dense(4, input_shape=(4, ), activation='relu'))
+  model.add(Dropout(0.5))
+  model.add(Dense(12, activation='relu'))
+  model.add(Dropout(0.5))
+  model.add(Dense(7, activation='sigmoid'))
+
+elif(active_model == 'conv1d_1'):
+
+  model.add(Embedding(2000, 50, input_length=4))
+  model.add(Dropout(0.3))
+  model.add(Conv1D(200, kernel_size=4, padding='valid', activation='relu', strides=1))
+  model.add(GlobalMaxPooling1D())
+  model.add(Dense(28, activation='relu'))
+  model.add(Dropout(0.3))
+  # We project onto a single unit output layer, and squash it with a sigmoid:
+  model.add(Dense(7, activation='sigmoid'))
 
 model.compile(loss='mae', optimizer='adam')
 
 model.fit(trainX, trainY, epochs=epochs, batch_size=batch_size, validation_data=(testX, testY), verbose=2)
 
-model.save('simple-sequential.h5')
+model.save(active_model+'.h5')
