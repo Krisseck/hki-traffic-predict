@@ -18,7 +18,7 @@ stops = ['A01', 'A02', 'A03', 'A04', 'A05', 'A06', 'A07', 'A08', 'A09', 'B01', '
 # fix random seed for reproducibility
 np.random.seed(7)
 
-source_data = np.genfromtxt(source_csv, delimiter=source_csv_delimiter, skip_header=1, usecols=[0,4,5,6,7,8,9,10,11,12,13,14], encoding='iso-8859-1', unpack=True, dtype=['U3', 'U32', 'uint32', 'uint32', 'uint8', 'uint16', 'uint16', 'uint16', 'uint16', 'uint16', 'uint16', 'uint16', 'uint16', 'uint16', 'uint16'])
+source_data = np.genfromtxt(source_csv, delimiter=source_csv_delimiter, skip_header=1, usecols=[0,4,5,6,7,8,9,10,11,12,13], encoding='iso-8859-1', unpack=True, dtype=['U3', 'U32', 'uint32', 'uint32', 'uint8', 'uint16', 'uint16', 'uint16', 'uint16', 'uint16', 'uint16', 'uint16', 'uint16', 'uint16', 'uint16'])
 
 print(source_data[25000])
 
@@ -36,8 +36,7 @@ for i in range(len(source_data)):
     source_data[i][7] / 250,
     source_data[i][8] / 250,
     source_data[i][9] / 250,
-    source_data[i][10] / 50,
-    source_data[i][11] / 5000
+    source_data[i][10] / 50
   ])
 
 print(traffic_data[25000])
@@ -76,7 +75,7 @@ model.add(Dense(4, input_shape=(4, ), activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(12, activation='relu'))
 model.add(Dropout(0.5))
-model.add(Dense(8, activation='sigmoid'))
+model.add(Dense(7, activation='sigmoid'))
 
 model.compile(loss='mae', optimizer='adam')
 
