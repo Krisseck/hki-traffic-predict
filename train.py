@@ -8,9 +8,9 @@ from keras.constraints import max_norm
 epochs = 10
 batch_size = 4
 
-model_types = ['dense_1', 'conv1d_1', 'lstm_1']
+model_types = ['dense_1', 'dense_2', 'conv1d_1', 'lstm_1']
 
-active_model = 'lstm_1'
+active_model = 'dense_2'
 
 source_csv = 'hki_liikennemaarat.csv'
 source_csv_delimiter = ';'
@@ -73,6 +73,8 @@ print(trainY.shape)
 print(testX.shape)
 print(testY.shape)
 
+print("Active model is: " + active_model)
+
 # create and fit model
 model = Sequential()
 
@@ -84,6 +86,16 @@ if(active_model == 'dense_1'):
   model.add(Dropout(0.5))
   model.add(Dense(7, activation='sigmoid'))
 
+elif(active_model == 'dense_2'):
+
+  model.add(Dense(4, input_shape=(4, ), activation='relu'))
+  model.add(Dropout(0.5))
+  model.add(Dense(20, activation='relu'))
+  model.add(Dropout(0.5))
+  model.add(Dense(80, activation='relu'))
+  model.add(Dropout(0.5))
+  model.add(Dense(7, activation='tanh'))
+
 elif(active_model == 'conv1d_1'):
 
   model.add(Embedding(2000, 50, input_length=4))
@@ -92,7 +104,6 @@ elif(active_model == 'conv1d_1'):
   model.add(GlobalMaxPooling1D())
   model.add(Dense(28, activation='relu'))
   model.add(Dropout(0.3))
-  # We project onto a single unit output layer, and squash it with a sigmoid:
   model.add(Dense(7, activation='sigmoid'))
 
 elif(active_model == 'lstm_1'):
