@@ -2,15 +2,15 @@ import numpy as np
 import random
 import math
 from keras.models import Sequential, load_model
-from keras.layers import Conv1D, GlobalMaxPooling1D, Embedding, Dropout, Dense, Flatten
+from keras.layers import Conv1D, GlobalMaxPooling1D, Embedding, LSTM, Dropout, Dense, Flatten
 from keras.constraints import max_norm
 
 epochs = 10
 batch_size = 4
 
-model_types = ['dense_1', 'conv1d_1']
+model_types = ['dense_1', 'conv1d_1', 'lstm_1']
 
-active_model = 'conv1d_1'
+active_model = 'lstm_1'
 
 source_csv = 'hki_liikennemaarat.csv'
 source_csv_delimiter = ';'
@@ -93,6 +93,18 @@ elif(active_model == 'conv1d_1'):
   model.add(Dense(28, activation='relu'))
   model.add(Dropout(0.3))
   # We project onto a single unit output layer, and squash it with a sigmoid:
+  model.add(Dense(7, activation='sigmoid'))
+
+elif(active_model == 'lstm_1'):
+
+  model.add(Embedding(1000, 64, input_length=4))
+  model.add(LSTM(20, return_sequences=True, kernel_constraint=max_norm(3)), activation='relu')
+  model.add(Dropout(0.5))
+  model.add(LSTM(60, return_sequences=True, kernel_constraint=max_norm(3)), activation='relu')
+  model.add(Dropout(0.5))
+  model.add(Flatten())
+  model.add(Dense(20, activation='relu'))
+  model.add(Dropout(0.5))
   model.add(Dense(7, activation='sigmoid'))
 
 model.compile(loss='mae', optimizer='adam')
