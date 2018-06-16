@@ -20,7 +20,7 @@ That trains the model and saves it as the name of the activei\_model variable, l
 
 ## Results
 
-*dense_1*
+**dense_2**
 
 ` - 56s - loss: 0.0327 - val_loss: 0.0320`
 
