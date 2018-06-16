@@ -98,9 +98,9 @@ elif(active_model == 'conv1d_1'):
 elif(active_model == 'lstm_1'):
 
   model.add(Embedding(1000, 64, input_length=4))
-  model.add(LSTM(20, return_sequences=True, kernel_constraint=max_norm(3)), activation='relu')
+  model.add(LSTM(20, return_sequences=True, kernel_constraint=max_norm(3), activation='relu'))
   model.add(Dropout(0.5))
-  model.add(LSTM(60, return_sequences=True, kernel_constraint=max_norm(3)), activation='relu')
+  model.add(LSTM(60, return_sequences=True, kernel_constraint=max_norm(3), activation='relu'))
   model.add(Dropout(0.5))
   model.add(Flatten())
   model.add(Dense(20, activation='relu'))
@@ -109,6 +109,6 @@ elif(active_model == 'lstm_1'):
 
 model.compile(loss='mae', optimizer='adam')
 
-model.fit(trainX, trainY, epochs=epochs, batch_size=batch_size, validation_data=(testX, testY), verbose=2)
-
-model.save(active_model+'.h5')
+while True:
+  model.fit(trainX, trainY, epochs=epochs, batch_size=batch_size, validation_data=(testX, testY), verbose=2)
+  model.save(active_model+'.h5')
