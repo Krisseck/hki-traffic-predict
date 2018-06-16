@@ -18,6 +18,12 @@ Then run:
 
 That trains the model and saves it as the name of the activei\_model variable, like `dense_1.h5`
 
+## Results
+
+*dense_1*
+
+` - 56s - loss: 0.0327 - val_loss: 0.0320`
+
 ## Other
 
 Source of CSV: https://hri.fi/data/dataset/liikennemaarat-helsingissa
