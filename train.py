@@ -10,7 +10,7 @@ batch_size = 4
 
 model_types = ['dense_1', 'dense_2', 'conv1d_1', 'lstm_1']
 
-active_model = 'dense_2'
+active_model = 'lstm_1'
 
 source_csv = 'hki_liikennemaarat.csv'
 source_csv_delimiter = ';'
