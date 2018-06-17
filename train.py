@@ -2,15 +2,15 @@ import numpy as np
 import random
 import math
 from keras.models import Sequential, load_model
-from keras.layers import Conv1D, GlobalMaxPooling1D, Embedding, LSTM, Dropout, Dense, Flatten
+from keras.layers import Conv1D, MaxPooling1D, Embedding, LSTM, Dropout, Dense, Flatten
 from keras.constraints import max_norm
 
-epochs = 10
+epochs = 100
 batch_size = 128
 
-model_types = ['dense_1', 'dense_2', 'dense_3', 'conv1d_1', 'lstm_1']
+model_types = ['dense_1', 'dense_2', 'dense_3', 'dense_4', 'dense_5', 'conv1d_1', 'lstm_1']
 
-active_model = 'lstm_2'
+active_model = 'conv1d_2'
 
 source_csv = 'hki_liikennemaarat.csv'
 source_csv_delimiter = ';'
@@ -116,6 +116,22 @@ elif(active_model == 'dense_3'):
   model.add(Dropout(0.5))
   model.add(Dense(7, activation='sigmoid'))
 
+elif(active_model == 'dense_4'):
+
+  model.add(Dense(20, input_shape=(4, ), activation='relu'))
+  model.add(Dropout(0.5))
+  model.add(Dense(60, activation='relu'))
+  model.add(Dropout(0.5))
+  model.add(Dense(7, activation='sigmoid'))
+
+elif(active_model == 'dense_5'):
+
+  model.add(Dense(40, input_shape=(4, ), activation='relu'))
+  model.add(Dropout(0.5))
+  model.add(Dense(40, activation='relu'))
+  model.add(Dropout(0.5))
+  model.add(Dense(7, activation='sigmoid'))
+
 elif(active_model == 'conv1d_1'):
 
   model.add(Embedding(2000, 50, input_length=4))
@@ -125,6 +141,19 @@ elif(active_model == 'conv1d_1'):
   model.add(Dense(28, activation='relu'))
   model.add(Dropout(0.3))
   model.add(Dense(7, activation='sigmoid'))
+
+elif(active_model == 'conv1d_2'):
+
+  trainX = np.expand_dims(trainX, axis=2)
+  trainY = np.expand_dims(trainY, axis=2)
+  testX = np.expand_dims(testX, axis=2)
+  testY = np.expand_dims(testY, axis=2)
+
+  model.add(Conv1D(2, 2, input_shape=(4, 1), activation='relu', border_mode='valid'))
+  model.add(MaxPooling1D(pool_size=2))
+  model.add(Dropout(0.25))
+  model.add(Flatten())
+  model.add(Dense(7, activation='relu'))
 
 elif(active_model == 'lstm_1'):
 
