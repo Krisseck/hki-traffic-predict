@@ -10,50 +10,29 @@ Note: this project can only be run with Python 3.
 
 ## Usage
 
+There are several scripts included:
+
+- **train_short_term.py** - Given the statistics for past 3 hours, make traffic predictions for the next 4 hours
+
 Check the `active_model` variable for which model will be used
 
 Then run:
 
-> python train.py
+> python train_short_term.py
 
-That trains the model and saves it as the name of the activei\_model variable, like `dense_1.h5`
+That trains the model and saves it as the name of the script + active\_model variable, like `short_term_dense_1.h5`
 
 ## Results
 
-**dense_1**
+### short_term
 
-` - 51s - loss: 0.0317 - val_loss: 0.0309`
+lstm_1
 
-**dense_2**
+` - 1s - loss: 0.0319 - val_loss: 0.0257`
 
-` - 56s - loss: 0.0327 - val_loss: 0.0320`
+conv1d_1
 
-**dense_3**
-
-` - 51s - loss: 0.0316 - val_loss: 0.0303`
-
-**dense_4**
-
-` - 2s - loss: 0.0289 - val_loss: 0.0286`
-
-**conv1d_1**
-
-` - 24s - loss: 0.0328 - val_loss: 0.0321`
-
-**conv1d_2**
-
-` - 2s - loss: 0.0291 - val_loss: 0.0286`
-
-**conv1d_3**
-
-` - 1s - loss: 0.0272 - val_loss: 0.0269`
-
-**lstm_1**
-
-` - 237s - loss: 0.0371 - val_loss: 0.0362`
-
-**lstm_2**
-` - 10s - loss: 0.0331 - val_loss: 0.0324`
+` - 0s - loss: 0.0271 - val_loss: 0.0263`
 
 ## Other
 
