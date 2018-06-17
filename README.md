@@ -42,6 +42,10 @@ lstm_2
 
 ` - 7s - loss: 0.0251 - val_loss: 0.0211`
 
+lstm_3
+
+` - 4s - loss: 0.0278 - val_loss: 0.0240`
+
 ## Other
 
 Source of CSV: https://hri.fi/data/dataset/liikennemaarat-helsingissa
