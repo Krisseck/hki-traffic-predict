@@ -40,6 +40,10 @@ That trains the model and saves it as the name of the activei\_model variable, l
 
 ` - 24s - loss: 0.0328 - val_loss: 0.0321`
 
+**conv1d_2**
+
+` - 2s - loss: 0.0291 - val_loss: 0.0286`
+
 **lstm_1**
 
 ` - 237s - loss: 0.0371 - val_loss: 0.0362`
