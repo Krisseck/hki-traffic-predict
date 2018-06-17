@@ -8,9 +8,9 @@ from keras.constraints import max_norm
 epochs = 100
 batch_size = 128
 
-model_types = ['dense_1', 'dense_2', 'dense_3', 'dense_4', 'dense_5', 'conv1d_1', 'lstm_1']
+model_types = ['dense_1', 'dense_2', 'dense_3', 'dense_4', 'dense_5', 'conv1d_1', 'conv1d_2', 'conv1d_3', 'lstm_1']
 
-active_model = 'conv1d_2'
+active_model = 'conv1d_3'
 
 source_csv = 'hki_liikennemaarat.csv'
 source_csv_delimiter = ';'
@@ -150,6 +150,20 @@ elif(active_model == 'conv1d_2'):
   model.add(Conv1D(input_shape=(4, 1), filters=200, kernel_size=4, activation='relu'))
   model.add(MaxPooling1D(1))
   model.add(Dropout(0.50))
+  model.add(Flatten())
+  model.add(Dense(7, activation='sigmoid'))
+
+elif(active_model == 'conv1d_3'):
+
+  trainX = np.expand_dims(trainX, axis=2)
+  testX = np.expand_dims(testX, axis=2)
+
+  model.add(Conv1D(input_shape=(4, 1), filters=100, kernel_size=4, activation='relu'))
+  model.add(MaxPooling1D(1))
+  model.add(Dropout(0.50))
+  model.add(Conv1D(filters=400, kernel_size=1, activation='relu'))
+  model.add(Dropout(0.50))
+  model.add(MaxPooling1D(1))
   model.add(Flatten())
   model.add(Dense(7, activation='sigmoid'))
 
