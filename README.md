@@ -40,6 +40,9 @@ That trains the model and saves it as the name of the activei\_model variable, l
 
 ` - 237s - loss: 0.0371 - val_loss: 0.0362`
 
+**lstm_2**
+` - 10s - loss: 0.0331 - val_loss: 0.0324`
+
 ## Other
 
 Source of CSV: https://hri.fi/data/dataset/liikennemaarat-helsingissa

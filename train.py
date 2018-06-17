@@ -6,11 +6,11 @@ from keras.layers import Conv1D, GlobalMaxPooling1D, Embedding, LSTM, Dropout, D
 from keras.constraints import max_norm
 
 epochs = 10
-batch_size = 4
+batch_size = 128
 
 model_types = ['dense_1', 'dense_2', 'dense_3', 'conv1d_1', 'lstm_1']
 
-active_model = 'dense_3'
+active_model = 'lstm_2'
 
 source_csv = 'hki_liikennemaarat.csv'
 source_csv_delimiter = ';'
@@ -68,6 +68,18 @@ trainY = np.array(trainY)
 testX = np.array(testX)
 testY = np.array(testY)
 
+# make it divisable by batch size
+remainder = len(trainX) % batch_size
+if remainder > 0:
+  trainX = trainX[:-remainder]
+  trainY = trainY[:-remainder]
+
+# make it divisable by batch size
+remainder = len(testX) % batch_size
+if remainder > 0:
+  testX = testX[:-remainder]
+  testY = testY[:-remainder]
+
 print(trainX.shape)
 print(trainY.shape)
 print(testX.shape)
@@ -124,6 +136,16 @@ elif(active_model == 'lstm_1'):
   model.add(Flatten())
   model.add(Dense(20, activation='relu'))
   model.add(Dropout(0.5))
+  model.add(Dense(7, activation='sigmoid'))
+
+elif(active_model == 'lstm_2'):
+
+  model.add(Embedding(100, 4, input_length=4))
+  model.add(LSTM(10, return_sequences=True, kernel_constraint=max_norm(3), activation='relu'))
+  model.add(Dropout(0.5))
+  model.add(LSTM(20, return_sequences=True, kernel_constraint=max_norm(3), activation='relu'))
+  model.add(Dropout(0.5))
+  model.add(Flatten())
   model.add(Dense(7, activation='sigmoid'))
 
 model.compile(loss='mae', optimizer='adam')
