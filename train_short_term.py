@@ -13,9 +13,9 @@ batch_size = 64
 
 script_name = 'short_term'
 
-model_types = ['lstm_1', 'lstm_2', 'conv1d_1']
+model_types = ['conv1d_1', 'dense_1', 'lstm_1', 'lstm_2']
 
-active_model = 'lstm_2'
+active_model = 'dense_1'
 
 source_csv = 'hki_liikennemaarat.csv'
 source_csv_delimiter = ';'
@@ -110,7 +110,25 @@ print("Active model is: " + active_model)
 # create and fit model
 model = Sequential()
 
-if(active_model == 'lstm_1'):
+if(active_model == 'conv1d_1'):
+
+  model.add(Conv1D(input_shape=(3, 10), filters=200, kernel_size=2, activation='relu'))
+  model.add(MaxPooling1D(2))
+  model.add(Dropout(0.50))
+  model.add(Flatten())
+  model.add(Dense(28, activation='sigmoid'))
+
+elif(active_model == 'dense_1'):
+
+  model.add(Dense(30, input_shape=(3, 10), activation='relu'))
+  model.add(Dropout(0.5))
+  model.add(Dense(100, activation='relu'))
+  model.add(Dropout(0.5))
+  model.add(Flatten())
+  model.add(Dropout(0.5))
+  model.add(Dense(28, activation='sigmoid'))
+
+elif(active_model == 'lstm_1'):
 
   model.add(LSTM(60, input_shape=(3, 10), return_sequences=True, kernel_constraint=max_norm(3)))
   model.add(Dropout(0.5))
@@ -131,14 +149,6 @@ elif(active_model == 'lstm_2'):
   model.add(Dropout(0.5))
   model.add(Flatten())
   model.add(Dropout(0.5))
-  model.add(Dense(28, activation='sigmoid'))
-
-elif(active_model == 'conv1d_1'):
-
-  model.add(Conv1D(input_shape=(3, 10), filters=200, kernel_size=2, activation='relu'))
-  model.add(MaxPooling1D(2))
-  model.add(Dropout(0.50))
-  model.add(Flatten())
   model.add(Dense(28, activation='sigmoid'))
 
 model.compile(loss='mae', optimizer='adam')

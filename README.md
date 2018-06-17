@@ -26,13 +26,21 @@ That trains the model and saves it as the name of the script + active\_model var
 
 ### short_term
 
+conv1d_1
+
+` - 0s - loss: 0.0271 - val_loss: 0.0263`
+
+dense_1
+
+` - 2s - loss: 0.0330 - val_loss: 0.0296`
+
 lstm_1
 
 ` - 1s - loss: 0.0319 - val_loss: 0.0257`
 
-conv1d_1
+lstm_2
 
-` - 0s - loss: 0.0271 - val_loss: 0.0263`
+` - 7s - loss: 0.0251 - val_loss: 0.0211`
 
 ## Other
 
