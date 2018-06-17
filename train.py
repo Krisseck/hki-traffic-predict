@@ -8,9 +8,9 @@ from keras.constraints import max_norm
 epochs = 10
 batch_size = 4
 
-model_types = ['dense_1', 'dense_2', 'conv1d_1', 'lstm_1']
+model_types = ['dense_1', 'dense_2', 'dense_3', 'conv1d_1', 'lstm_1']
 
-active_model = 'lstm_1'
+active_model = 'dense_3'
 
 source_csv = 'hki_liikennemaarat.csv'
 source_csv_delimiter = ';'
@@ -95,6 +95,14 @@ elif(active_model == 'dense_2'):
   model.add(Dense(80, activation='relu'))
   model.add(Dropout(0.5))
   model.add(Dense(7, activation='tanh'))
+
+elif(active_model == 'dense_3'):
+
+  model.add(Dense(4, input_shape=(4, ), activation='relu'))
+  model.add(Dropout(0.5))
+  model.add(Dense(16, activation='relu'))
+  model.add(Dropout(0.5))
+  model.add(Dense(7, activation='sigmoid'))
 
 elif(active_model == 'conv1d_1'):
 
