@@ -30,6 +30,10 @@ conv1d_1
 
 ` - 0s - loss: 0.0271 - val_loss: 0.0263`
 
+conv1d_2
+
+` - 0s - loss: 0.0191 - val_loss: 0.0174`
+
 dense_1
 
 ` - 2s - loss: 0.0330 - val_loss: 0.0296`
