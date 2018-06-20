@@ -13,6 +13,7 @@ Note: this project can only be run with Python 3.
 There are several scripts included:
 
 - **train_short_term.py** - Given the statistics for past 3 hours, make traffic predictions for the next 4 hours
+- **train_shorter_term.py** - Given just the current (now) traffic data, make traffic predictions for the next 4 hours
 
 Check the `active_model` variable for which model will be used
 
@@ -53,6 +54,21 @@ lstm_2
 lstm_3
 
 ` - 4s - loss: 0.0278 - val_loss: 0.0240`
+
+### shorter_term
+
+conv1d_1
+
+` - 0s - loss: 0.0254 - val_loss: 0.0249`
+
+dense_1 
+
+` - 0s - loss: 0.0364 - val_loss: 0.0340`
+
+lstm_1
+
+` - 1s - loss: 0.0343 - val_loss: 0.0324`
+
 
 ## Other
 
