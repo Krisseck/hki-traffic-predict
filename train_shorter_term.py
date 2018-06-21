@@ -9,13 +9,13 @@ from keras.layers import Conv1D, MaxPooling1D, GlobalAveragePooling1D, Embedding
 from keras.constraints import max_norm
 
 epochs = 100
-batch_size = 250
+batch_size = 120
 
 script_name = 'shorter_term'
 
 model_types = ['conv1d_1', 'conv1d_2', 'dense_1', 'dense_2', 'lstm_1']
 
-active_model = 'conv1d_2'
+active_model = 'dense_2'
 
 source_csv = 'hki_liikennemaarat.csv'
 source_csv_delimiter = ';'
@@ -58,8 +58,8 @@ trainY = []
 # and output is the future data in 1 hour,
 # 2 hours, 3 hours and 4 hours
 for i in range(len(traffic_data)):
-  # time has to be in between 3:00 and 19:00
-  if(traffic_data[i][2] >= (3/24) and traffic_data[i][2] <= (19/24)):
+  # time has to be in between 00:00 and 19:00
+  if(traffic_data[i][2] <= (19/24)):
     trainX.append(traffic_data[i])
     trainY.append([
       traffic_data[i+1][3],

@@ -63,7 +63,7 @@ conv1d_1
 
 conv1d_2
 
-` - 1s - loss: 0.0211 - val_loss: 0.0200`
+` - 1s - loss: 0.0186 - val_loss: 0.0181`
 
 dense_1 
 
@@ -71,7 +71,7 @@ dense_1
 
 dense_2
 
-` - 0s - loss: 0.0307 - val_loss: 0.0298`
+` - 2s - loss: 0.0284 - val_loss: 0.0260`
 
 lstm_1
 
