@@ -9,13 +9,13 @@ from keras.layers import Conv1D, MaxPooling1D, GlobalAveragePooling1D, Embedding
 from keras.constraints import max_norm
 
 epochs = 100
-batch_size = 200
+batch_size = 250
 
 script_name = 'shorter_term'
 
-model_types = ['conv1d_1', 'dense_1', 'lstm_1']
+model_types = ['conv1d_1', 'conv1d_2', 'dense_1', 'dense_2', 'lstm_1']
 
-active_model = 'lstm_1'
+active_model = 'conv1d_2'
 
 source_csv = 'hki_liikennemaarat.csv'
 source_csv_delimiter = ';'
@@ -122,11 +122,31 @@ if(active_model == 'conv1d_1'):
   model.add(Flatten())
   model.add(Dense(28, activation='sigmoid'))
 
+if(active_model == 'conv1d_2'):
+
+  trainX = np.expand_dims(trainX, axis=2)
+
+  model.add(Conv1D(input_shape=(10, 1), filters=200, kernel_size=4, activation='relu'))
+  model.add(MaxPooling1D(2))
+  model.add(Dropout(0.5))
+  model.add(Conv1D(filters=500, kernel_size=2, activation='relu'))
+  model.add(Dropout(0.5))
+  model.add(Flatten())
+  model.add(Dense(28, activation='sigmoid'))
+
 elif(active_model == 'dense_1'):
 
   model.add(Dense(30, input_shape=(10, ), activation='relu'))
   model.add(Dropout(0.5))
   model.add(Dense(100, activation='relu'))
+  model.add(Dropout(0.5))
+  model.add(Dense(28, activation='sigmoid'))
+
+elif(active_model == 'dense_2'):
+
+  model.add(Dense(40, input_shape=(10, ), activation='relu'))
+  model.add(Dropout(0.5))
+  model.add(Dense(200, activation='relu'))
   model.add(Dropout(0.5))
   model.add(Dense(28, activation='sigmoid'))
 
