@@ -6,7 +6,7 @@ Keras neural network to predict traffic in Helsinki
 
 Note: this project can only be run with Python 3.
 
-> pip install -r requirements.txt
+`pip install -r requirements.txt`
 
 ## Usage
 
@@ -19,7 +19,7 @@ Check the `active_model` variable for which model will be used
 
 Then run:
 
-> python train_short_term.py
+`python train_short_term.py`
 
 That trains the model and saves it as the name of the script + active\_model variable, like `short_term_dense_1.h5`
 
