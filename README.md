@@ -77,6 +77,9 @@ lstm_1
 
 ` - 1s - loss: 0.0343 - val_loss: 0.0324`
 
+lstm_2
+
+` - 2s - loss: 0.0296 - val_loss: 0.0254`
 
 ## Other
 

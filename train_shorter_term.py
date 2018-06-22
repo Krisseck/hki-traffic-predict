@@ -9,13 +9,13 @@ from keras.layers import Conv1D, MaxPooling1D, GlobalAveragePooling1D, Embedding
 from keras.constraints import max_norm
 
 epochs = 100
-batch_size = 120
+batch_size = 200
 
 script_name = 'shorter_term'
 
-model_types = ['conv1d_1', 'conv1d_2', 'dense_1', 'dense_2', 'lstm_1']
+model_types = ['conv1d_1', 'conv1d_2', 'dense_1', 'dense_2', 'lstm_1', 'lstm_2']
 
-active_model = 'dense_2'
+active_model = 'lstm_2'
 
 source_csv = 'hki_liikennemaarat.csv'
 source_csv_delimiter = ';'
@@ -160,8 +160,16 @@ elif(active_model == 'lstm_1'):
   model.add(Dropout(0.5))
   model.add(Dense(28, activation='sigmoid'))
 
+elif(active_model == 'lstm_2'):
+
+  trainX = np.expand_dims(trainX, axis=2)
+
+  model.add(LSTM(28, input_shape=(10, 1)))
+  model.add(Dropout(0.5))
+  model.add(Dense(28, activation='sigmoid'))
+
 model.compile(loss='mae', optimizer='adam')
 
 while True:
-  model.fit(trainX, trainY, epochs=epochs, batch_size=batch_size, validation_split=0.1, verbose=2)
+  model.fit(trainX, trainY, epochs=epochs, batch_size=batch_size, validation_split=0.2, verbose=2)
   model.save(script_name + '_' + active_model + '.h5')
