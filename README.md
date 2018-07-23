@@ -59,27 +59,35 @@ lstm_3
 
 conv1d_1
 
-` - 0s - loss: 0.0254 - val_loss: 0.0249`
+`1s 78us/step - loss: 0.0261 - val_loss: 0.0231`
 
 conv1d_2
 
-` - 1s - loss: 0.0186 - val_loss: 0.0181`
+`1s 82us/step - loss: 0.0236 - val_loss: 0.0205`
 
 dense_1 
 
-` - 0s - loss: 0.0364 - val_loss: 0.0340`
+`1s 59us/step - loss: 0.0335 - val_loss: 0.0289`
 
 dense_2
 
-` - 2s - loss: 0.0284 - val_loss: 0.0260`
+`1s 59us/step - loss: 0.0294 - val_loss: 0.0248`
+
+dense_3
+
+`1s 63us/step - loss: 0.0343 - val_loss: 0.0302`
+
+dense_4
+
+`1s 70us/step - loss: 0.0211 - val_loss: 0.0163`
 
 lstm_1
 
-` - 1s - loss: 0.0343 - val_loss: 0.0324`
+`1s 78us/step - loss: 0.0239 - val_loss: 0.0207`
 
 lstm_2
 
-` - 2s - loss: 0.0296 - val_loss: 0.0254`
+`5s 358us/step - loss: 0.0314 - val_loss: 0.0279`
 
 ## Other
 

@@ -7,15 +7,17 @@ import math
 from keras.models import Sequential, load_model
 from keras.layers import Conv1D, MaxPooling1D, GlobalAveragePooling1D, Embedding, LSTM, Dropout, Dense, Flatten
 from keras.constraints import max_norm
+from keras.callbacks import EarlyStopping, ModelCheckpoint
 
-epochs = 100
-batch_size = 200
+epochs = 1000
+batch_size = 30
+validation_split = 0.2
 
 script_name = 'shorter_term'
 
-model_types = ['conv1d_1', 'conv1d_2', 'dense_1', 'dense_2', 'lstm_1', 'lstm_2']
+model_types = ['conv1d_1', 'conv1d_2', 'dense_1', 'dense_2', 'dense_3', 'dense_4', 'lstm_1', 'lstm_2']
 
-active_model = 'lstm_2'
+active_model = 'dense_4'
 
 source_csv = 'hki_liikennemaarat.csv'
 source_csv_delimiter = ';'
@@ -150,6 +152,24 @@ elif(active_model == 'dense_2'):
   model.add(Dropout(0.5))
   model.add(Dense(28, activation='sigmoid'))
 
+elif(active_model == 'dense_3'):
+
+  model.add(Dense(40, input_shape=(10, ), activation='linear'))
+  model.add(Dropout(0.5))
+  model.add(Dense(100, activation='relu'))
+  model.add(Dropout(0.5))
+  model.add(Dense(28, activation='relu'))
+
+elif(active_model == 'dense_4'):
+
+  model.add(Dense(300, input_shape=(10, ), activation='relu'))
+  model.add(Dropout(0.5))
+  model.add(Dense(800, activation='relu'))
+  model.add(Dropout(0.5))
+  model.add(Dense(280, activation='relu'))
+  model.add(Dropout(0.5))
+  model.add(Dense(28, activation='sigmoid'))
+
 elif(active_model == 'lstm_1'):
 
   trainX = np.expand_dims(trainX, axis=2)
@@ -170,6 +190,6 @@ elif(active_model == 'lstm_2'):
 
 model.compile(loss='mae', optimizer='adam')
 
-while True:
-  model.fit(trainX, trainY, epochs=epochs, batch_size=batch_size, validation_split=0.2, verbose=2)
-  model.save(script_name + '_' + active_model + '.h5')
+earlystopper = EarlyStopping(monitor='val_loss', verbose=1, patience=5)
+checkpointer = ModelCheckpoint(filepath=script_name + '_' + active_model + '.h5', verbose=1, save_best_only=True)
+model.fit(trainX, trainY, epochs=epochs, batch_size=batch_size, validation_split=validation_split, callbacks=[checkpointer, earlystopper])
