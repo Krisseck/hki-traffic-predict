@@ -105,3 +105,4 @@ venv.bak/
 
 # saved models
 *.h5
+*.bin
